@@ -77,15 +77,18 @@ function startGame() {
 }
 
 function moveArmy() {
+  var currentArmy
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
     console.log($(this).attr('class'))
     clicks++
-    var currentArmy = this.innerText
+    currentArmy = this.innerText
+    return currentArmy
   }
   else if (clicks == 1 && $(this).attr('class') == 'neutral') {
     console.log('second click yooooo')
     var halfThisArmy = divide(currentArmy)
     console.log(currentArmy)
+    console.log(halfThisArmy)
     // var halfThisArmy = divide(this.innerText)
     // console.log(this.innerText)
     // console.log(halfThisArmy)
@@ -96,12 +99,3 @@ function moveArmy() {
   //clear the clicks
 
 }
-
-
-//
-//      //stretch goals is to highlight available cells to move to
-//      // should I add an id that I can reference?
-//      // if second click hasclass neutral just toggle class and move half
-//      // if same team, add them
-//      // if different team subtract them
-//      // this info needs to get sent to the players info above? also how?

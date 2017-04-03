@@ -75,15 +75,6 @@ Roadblocks:
 
 
 
-// click event only for the tiles that have teams on them
- this.tileDiv.on('click', function() { // grabbing the div not the tile
-   if ((currentPlayer == players.playerOne) && this.className == 'blueTeam') {
-     ++ clicks;
-     if (clicks == 1) {
-       this.tileDiv.on('click', function() {
-         console.log(this)
-       })
-
      }
      //event listener must be removeable so it neEDS A NAME
      // remove event for everything except the tiles n/e/s/wso you can't click twice or too far
