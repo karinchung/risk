@@ -13,6 +13,11 @@ var board = []
 var currentPlayer = players.playerOne;
 var $startButton = $('<button>Start Game</button>')
 var clicks = 0
+<<<<<<< HEAD
+=======
+var currentArmy = 0
+var lastCell = null;
+>>>>>>> master
 
 $body.append($startButton)
 $startButton.on('click', startGame)
@@ -75,6 +80,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
 }
+<<<<<<< HEAD
 
 function moveArmy() {
   var currentArmy
@@ -97,5 +103,34 @@ function moveArmy() {
     console.log("Not a valid move")
   }
   //clear the clicks
+=======
+>>>>>>> master
 
+function moveArmy() {
+
+  if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
+    console.log($(this).attr('class'))
+    clicks++
+    currentArmy = this.innerText
+    lastCell = this
+    console.log('this is ' + currentArmy + ' from the first click')
+  }
+  else if (clicks == 1 && $(this).attr('class') == 'neutral') {
+    console.log('second click yooooo')
+    var halfThisArmy = divide(currentArmy)
+    $(this).removeClass('neutral')
+    $(this).toggleClass(currentPlayer.color)
+    this.innerText += halfThisArmy
+    lastCell.innerText = halfThisArmy
+    clicks = 0
+    switchTurns()
+    // var halfThisArmy = divide(this.innerText)
+    // console.log(this.innerText)
+    // console.log(halfThisArmy)
+  }
+  else {
+    console.log("Not a valid move")
+  }
+  //clear the clicks
+  //clear currentArmy?
 }
