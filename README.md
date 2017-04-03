@@ -1,5 +1,7 @@
 ### Risk
 
+
+
 **Risk**
 	* You click on tiles to move army men to them from a starting pool. Start with 100 when you click on the starting pool and then somewhere else it takes half away from your army and places them there. If there is already something there it adds them. If they're from an enemy team, it subtracts. Tiles change color based on who has an army there.
 
@@ -64,3 +66,7 @@ if the div has a fortification then it's true
 if true then army *1.1
 
 randomly generate where the fortifications are and where the blockades are
+
+
+Roadblocks:
+1. 

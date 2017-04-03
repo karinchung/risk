@@ -1,3 +1,17 @@
+header {
+  width: 800px;
+  margin: auto;
+  margin-bottom: 20px;
+	border-radius: 5px;
+  background-color: white;
+  padding: 10px
+}
+
+body {
+  background-color: rgba(0, 0, 0, 0.90);
+}
+
+
 .container {
   width: 770px;
   margin: auto;
@@ -6,7 +20,7 @@
 .neutral {
   height: 100px; width: 100px;
   border: 1px solid black;
-  background-color: grey;
+  background-color: #efeabe;
   display: inline-block;
   float: left;
 }
