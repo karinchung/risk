@@ -3,12 +3,16 @@ var players = {
   playerTwo: {name: null, armySize: 100, tiles: [], color: 'red'}
 }
 
-var gridAmount = 28
+//armySize is really just starting army size unless it's zero in which case you dead
+// count tiles for win condition
+
+var gridAmount = 35
 var $container = $('.container')
 var $body = $('body')
-var $board = []
+var board = []
 var currentPlayer = players.playerOne;
 var $startButton = $('<button>Start Game</button>')
+var clicks = 0
 
 $body.append($startButton)
 $startButton.on('click', startGame)
@@ -17,10 +21,7 @@ $startButton.on('click', startGame)
 // tile creation constructor
 function Tile() {
   this.tileDiv = ($('<div></div>', {'class': 'neutral'}));
-  // this is making the $container class change to neutral? WHY?
-  // how to add class in a different line?
-  // append to container in a different line?
-  this.tileDiv.owner = null;
+  this.owner = null;
   this.armySize = 0;
   this.fortification = null;
   this.obstacle = null;
@@ -28,40 +29,29 @@ function Tile() {
     if (this.owner == players.playerOne) {
       if (this.tileDiv.hasClass('neutral')) {
         this.tileDiv.removeClass('neutral')
-        this.tileDiv.toggleClass('blueTeam')
+        this.tileDiv.toggleClass('blue')
       }
     }
     else if (this.owner == players.playerTwo) {
       if (this.tileDiv.hasClass('neutral')) {
         this.tileDiv.removeClass('neutral')
-        this.tileDiv.toggleClass('redTeam')
+        this.tileDiv.toggleClass('red')
+        }
       }
-    }
-  };
- // click event only for the tiles that have teams on them
-  this.tileDiv.on('click', function() { // grabbing the div not the tile
-    if ((currentPlayer == players.playerOne) && this.className == 'blueTeam') {
-      var currentArmy = this.innerHTML
+    };
+    this.tileDiv.on('click', moveArmy);
 
-      // turn off click listener for all other tiles other than n/s/e/w- how??
-      // if second click hasclass neutral just toggle class and move half
-      // if same team, add them
-      // if different team subtract them
-      // this info needs to get sent to the players info above? also how?
-    }
-
-  });
 }
 
 function divide(armyToDivide) {
-  return armyToDivide / 2
+  return (armyToDivide / 2)
 }
 
 // Creates all the tiles
 for (var i = 0; i < gridAmount; i++) {
-  $board[i] = new Tile
-  $board[i].tileDiv.text(i) //take this out, this for logic later
-  $container.append($board[i].tileDiv)
+  board[i] = new Tile()
+  //board[i].tileDiv.text(i) //take this out, this for logic later
+  $container.append(board[i].tileDiv)
 }
 
 // switch turns
@@ -77,12 +67,41 @@ function switchTurns() {
 // start game button and make armies appear
 var $allTiles = $('.container > div') // if this is put up above the code it doesn't work because tiles haven't been created yet?
 function startGame() {
-  $board[0].owner = players.playerOne
-  $board[0].showNewClass()
-  $board[0].tileDiv.text(players.playerOne.armySize)
+  board[0].owner = players.playerOne
+  board[0].showNewClass()
+  board[0].tileDiv.text(players.playerOne.armySize)
 
-  $board[gridAmount - 1].owner = players.playerTwo
-  $board[gridAmount - 1].showNewClass()
-  $board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
+  board[gridAmount - 1].owner = players.playerTwo
+  board[gridAmount - 1].showNewClass()
+  board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
+}
+
+function moveArmy() {
+  if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
+    console.log($(this).attr('class'))
+    clicks++
+    var currentArmy = this.innerText
+  }
+  else if (clicks == 1 && $(this).attr('class') == 'neutral') {
+    console.log('second click yooooo')
+    var halfThisArmy = divide(currentArmy)
+    console.log(currentArmy)
+    // var halfThisArmy = divide(this.innerText)
+    // console.log(this.innerText)
+    // console.log(halfThisArmy)
+  }
+  else {
+    console.log("Not a valid move")
+  }
+  //clear the clicks
 
 }
+
+
+//
+//      //stretch goals is to highlight available cells to move to
+//      // should I add an id that I can reference?
+//      // if second click hasclass neutral just toggle class and move half
+//      // if same team, add them
+//      // if different team subtract them
+//      // this info needs to get sent to the players info above? also how?

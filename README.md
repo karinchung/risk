@@ -1,5 +1,7 @@
 ### Risk
 
+// notes: math.abs for winner
+
 
 
 **Risk**
@@ -69,4 +71,36 @@ randomly generate where the fortifications are and where the blockades are
 
 
 Roadblocks:
-1. 
+1. click events wait for two
+
+
+
+// click event only for the tiles that have teams on them
+ this.tileDiv.on('click', function() { // grabbing the div not the tile
+   if ((currentPlayer == players.playerOne) && this.className == 'blueTeam') {
+     ++ clicks;
+     if (clicks == 1) {
+       this.tileDiv.on('click', function() {
+         console.log(this)
+       })
+
+     }
+     //event listener must be removeable so it neEDS A NAME
+     // remove event for everything except the tiles n/e/s/wso you can't click twice or too far
+     // then on the second click, half their amry will be dispenced to that tile.
+     // reset clicks
+     var halfThisArmy = divide(this.innerHTML)
+     this.innerHTML = halfThisArmy // the other half goes to the new tile but only on second click
+     // if they keep clicking it will keep halving, so remove event listener or only have it actionable on second click
+
+     var currentArmy = this.innerHTML
+
+     // turn off click listener for all other tiles other than n/s/e/w- how?? //stretch goals is to highlight available cells to move to
+     // should I add an id that I can reference?
+     // if second click hasclass neutral just toggle class and move half
+     // if same team, add them
+     // if different team subtract them
+     // this info needs to get sent to the players info above? also how?
+   }
+
+ });
