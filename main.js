@@ -14,6 +14,11 @@ var clicks = 0;
 var currentArmy = 0;
 var lastCell = null;
 var viableTiles = [];
+var option1 = 0;
+var option2 = 0;
+var option3 = 0;
+var option4 = 0;
+
 
 $body.append($startButton);
 $startButton.on('click', startGame);
@@ -79,24 +84,55 @@ function divide(armyToDivide) {
   return Number(armyToDivide / 2)
 };
 
+function checksOptions() {
+  if (lastCell.id -1 >= 0) {
+    option1 = Number(lastCell.id) - 1
+    viableTiles[0] = option1
+    console.log('original cell was ' + lastCell.id)
+    console.log('option1 is ' + option1)
+    $allTiles.eq(option1).css('border', '1px solid orange')
+  }
+  if (lastCell.id - 7 > 0) {
+    option2 = Number(lastCell.id) - 7
+    viableTiles[1] = option2
+    console.log('original cell was ' + lastCell.id)
+    console.log('option2 is ' + option2)
+    $allTiles.eq(option2).css('border', '1px solid orange')
+  }
+  if (lastCell.id + 1 < (gridAmount - 1)) {
+    option3 = Number(lastCell.id) + 1
+    viableTiles[2] = option3
+    console.log('original cell was ' + lastCell.id)
+    console.log('option3 is ' + option3)
+    $allTiles.eq(option3).css('border', '1px solid orange')
+  }
+  if (lastCell.id + 7 <= (gridAmount - 1)) {
+    option4 = Number(lastCell.id) + 7
+    viableTiles[3] = option4
+    console.log('original cell was ' + lastCell.id)
+    console.log('option4 is ' + option4)
+    $allTiles.eq(option4).css('border', '1px solid orange')
+  }
+  // if (lastCell.id % 7) {
+  //
+  // }
+};
+
+function resetOptionDisplay() {
+  $allTiles.eq(option1).css('border', '1px solid black')
+  $allTiles.eq(option2).css('border', '1px solid black')
+  $allTiles.eq(option3).css('border', '1px solid black')
+  $allTiles.eq(option4).css('border', '1px solid black')
+}
+
 function moveArmy() {
   // first click must be a tile color of the current player
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
+    // make the cell look clicked. Then have it go away
     clicks++
     currentArmy = this.innerText
     lastCell = this
-    if (lastCell.id -1 > 0) { // can this be put into a separate function?
-      viableTiles[0] = Number(lastCell.id - 1)
-    }
-    if (lastCell.id - 7 > 0) {
-      viableTiles[1] = Number(lastCell.id - 7)
-    }
-    if (lastCell.id + 1 < gridAmount - 1) {
-      viableTiles[2] = Number(lastCell.id + 1)
-    }
-    if (lastCell.id + 7 < gridAmount - 1) {
-      viableTiles[3] = Number(lastCell.id + 7)
-    }
+    checksOptions()
     // add a function here that toggles the viableTiles css to orange
 
   }
@@ -104,13 +140,13 @@ function moveArmy() {
   else if ((clicks == 1 && $(this).attr('class') == 'neutral') &&
   (this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) ) {
     // bug: you can click on yourself and delete yourself so that's great
-    console.log(this.id)
     var halfThisArmy = divide(currentArmy)
     $(this).removeClass('neutral')
     $(this).toggleClass(currentPlayer.color)
     this.innerText += halfThisArmy
     lastCell.innerText = halfThisArmy
     clicks = 0
+    resetOptionDisplay()
     switchTurns()
   }
   // second click: if the same color tile is clicked
@@ -119,6 +155,7 @@ function moveArmy() {
     this.innerText = parseInt(this.innerText) + halfThisArmy // number() didn't work
     lastCell.innerText = halfThisArmy
     clicks = 0
+    resetOptionDisplay()
     switchTurns()
   }
   // second click: if an enemy tile is clicked
@@ -132,6 +169,7 @@ function moveArmy() {
       $(this).removeClass(otherPlayer.color)
       $(this).addClass('neutral')
       clicks = 0
+      resetOptionDisplay()
       switchTurns()
     }
     else if (battleResult < 0) {
@@ -140,6 +178,7 @@ function moveArmy() {
       $(lastCell).removeClass(currentPlayer.color)
       $(lastCell).addClass('neutral')
       clicks = 0
+      resetOptionDisplay()
       switchTurns()
     }
     else if (battleResult == 0) {
@@ -150,6 +189,7 @@ function moveArmy() {
       $(this).removeClass(otherPlayer.color)
       $(this).addClass('neutral')
       clicks = 0
+      resetOptionDisplay()
       switchTurns()
     }
   }
