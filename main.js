@@ -8,6 +8,7 @@ var players = {
 
 var gridAmount = 35
 var $container = $('.container')
+var $header = $('header')
 var $body = $('body')
 var board = []
 var currentPlayer = players.playerOne;
@@ -52,24 +53,13 @@ function divide(armyToDivide) {
 // Creates all the tiles
 for (var i = 0; i < gridAmount; i++) {
   board[i] = new Tile()
-  //board[i].tileDiv.text(i) //take this out, this for logic later
   $container.append(board[i].tileDiv)
 };
-
-// switch turns
-function switchTurns() {
-  if(currentPlayer == players.playerOne) {
-    currentPlayer = players.playerTwo
-    otherPlayer = players.playerOne
-
-  } else {
-    currentPlayer = players.playerOne
-    otherPlayer = players.playerTwo
-  }
-};
+var $allTiles = $('.container > div') // if this is put up above the code it doesn't work because tiles haven't been created yet?
+$allTiles.mouseenter(function() {($(this).css('border', '1px solid orange'))});
+$allTiles.mouseleave(function() {($(this).css('border', '1px solid black'))});
 
 // start game button and make armies appear
-var $allTiles = $('.container > div') // if this is put up above the code it doesn't work because tiles haven't been created yet?
 function startGame() {
   board[0].owner = players.playerOne
   board[0].showNewClass()
@@ -114,8 +104,8 @@ function moveArmy() {
     if (battleResult > 0) {
       lastCell.innerText = clickedFirst - clickedSecond
       this.innerText = ""
-      $(this).removeClass(otherPlayer.color)//this.removeClass(OtherPlayer) //make this a thing if current player is x...
-      $(this).addClass('neutral') //remove the other class?
+      $(this).removeClass(otherPlayer.color)
+      $(this).addClass('neutral')
       clicks = 0
       switchTurns()
     }
@@ -127,11 +117,30 @@ function moveArmy() {
       clicks = 0
       switchTurns()
     }
+    else if (battleResult == 0) {
+      lastCell.innerText = ""
+      this.innerText = ""
+      $(lastCell).removeClass(currentPlayer.color)
+      $(lastCell).addClass('neutral')
+      $(this).removeClass(otherPlayer.color)
+      $(this).addClass('neutral')
+      clicks = 0
+      switchTurns()
+    }
   }
   else {
     console.log("Not a valid move")
   }
 };
 
-//highlight cell when clicked on
-// highlight possible cells to go to
+// switch turns
+function switchTurns() {
+  if(currentPlayer == players.playerOne) {
+    currentPlayer = players.playerTwo
+    otherPlayer = players.playerOne
+
+  } else {
+    currentPlayer = players.playerOne
+    otherPlayer = players.playerTwo
+  }
+};
