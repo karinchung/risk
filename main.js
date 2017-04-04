@@ -1,7 +1,7 @@
 var players = {
   playerOne: {name: null, armySize: 100, tiles: [], color: 'blue'},
   playerTwo: {name: null, armySize: 100, tiles: [], color: 'red'}
-}
+};
 
 //armySize is really just starting army size unless it's zero in which case you dead
 // count tiles for win condition
@@ -11,17 +11,14 @@ var $container = $('.container')
 var $body = $('body')
 var board = []
 var currentPlayer = players.playerOne;
+var otherPlayer = players.playerTwo;
 var $startButton = $('<button>Start Game</button>')
 var clicks = 0
-
 var currentArmy = 0
 var lastCell = null;
 
-
-$body.append($startButton)
-$startButton.on('click', startGame)
-
-
+$body.append($startButton);
+$startButton.on('click', startGame);
 
 // tile creation constructor
 function Tile() {
@@ -46,28 +43,30 @@ function Tile() {
     };
     this.tileDiv.on('click', moveArmy);
 
-}
+};
 
 function divide(armyToDivide) {
   return Number(armyToDivide / 2)
-}
+};
 
 // Creates all the tiles
 for (var i = 0; i < gridAmount; i++) {
   board[i] = new Tile()
   //board[i].tileDiv.text(i) //take this out, this for logic later
   $container.append(board[i].tileDiv)
-}
+};
 
 // switch turns
 function switchTurns() {
   if(currentPlayer == players.playerOne) {
     currentPlayer = players.playerTwo
+    otherPlayer = players.playerOne
 
   } else {
     currentPlayer = players.playerOne
+    otherPlayer = players.playerTwo
   }
-}
+};
 
 // start game button and make armies appear
 var $allTiles = $('.container > div') // if this is put up above the code it doesn't work because tiles haven't been created yet?
@@ -80,7 +79,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
-}
+};
 
 function moveArmy() {
   // first click must be a tile color of the current player
@@ -96,18 +95,43 @@ function moveArmy() {
     $(this).toggleClass(currentPlayer.color)
     this.innerText += halfThisArmy
     lastCell.innerText = halfThisArmy
-    // console.log(this.innerText)
     clicks = 0
     switchTurns()
   }
   // second click: if the same color tile is clicked
   else if (clicks == 1 && $(this).attr('class') == currentPlayer.color) {
     var halfThisArmy = divide(currentArmy)
-    console.log(parseInt(this.innerText))
     this.innerText = parseInt(this.innerText) + halfThisArmy // number() didn't work
     lastCell.innerText = halfThisArmy
+    clicks = 0
+    switchTurns()
+  }
+  // second click: if an enemy tile is clicked
+  else if (clicks == 1 && $(this).attr('class') != 'neutral' && ($(this).attr('class') != currentPlayer.color)) {
+    var clickedFirst = parseInt(lastCell.innerText)
+    var clickedSecond = parseInt(this.innerText)
+    var battleResult = clickedFirst - clickedSecond
+    if (battleResult > 0) {
+      lastCell.innerText = clickedFirst - clickedSecond
+      this.innerText = ""
+      $(this).removeClass(otherPlayer.color)//this.removeClass(OtherPlayer) //make this a thing if current player is x...
+      $(this).addClass('neutral') //remove the other class?
+      clicks = 0
+      switchTurns()
+    }
+    else if (battleResult < 0) {
+      lastCell.innerText = ""
+      this.innerText = clickedSecond - clickedFirst
+      $(lastCell).removeClass(currentPlayer.color)
+      $(lastCell).addClass('neutral')
+      clicks = 0
+      switchTurns()
+    }
   }
   else {
     console.log("Not a valid move")
   }
-}
+};
+
+//highlight cell when clicked on
+// highlight possible cells to go to
