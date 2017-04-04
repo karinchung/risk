@@ -23,6 +23,7 @@ $body.append($startButton)
 $startButton.on('click', startGame)
 
 
+
 // tile creation constructor
 function Tile() {
   this.tileDiv = ($('<div></div>', {'class': 'neutral'}));
@@ -49,7 +50,7 @@ function Tile() {
 }
 
 function divide(armyToDivide) {
-  return (armyToDivide / 2)
+  return Number(armyToDivide / 2)
 }
 
 // Creates all the tiles
@@ -79,6 +80,7 @@ function startGame() {
   board[gridAmount - 1].owner = players.playerTwo
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
+  $startButton.off('click', startGame)
 }
 <<<<<<< HEAD
 
@@ -107,30 +109,31 @@ function moveArmy() {
 >>>>>>> master
 
 function moveArmy() {
-
+  // first click must be a tile color of the current player
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
-    console.log($(this).attr('class'))
     clicks++
     currentArmy = this.innerText
     lastCell = this
-    console.log('this is ' + currentArmy + ' from the first click')
   }
+  // second click: if a neutral tile is clicked
   else if (clicks == 1 && $(this).attr('class') == 'neutral') {
-    console.log('second click yooooo')
     var halfThisArmy = divide(currentArmy)
     $(this).removeClass('neutral')
     $(this).toggleClass(currentPlayer.color)
     this.innerText += halfThisArmy
     lastCell.innerText = halfThisArmy
+    // console.log(this.innerText)
     clicks = 0
     switchTurns()
-    // var halfThisArmy = divide(this.innerText)
-    // console.log(this.innerText)
-    // console.log(halfThisArmy)
+  }
+  // second click: if the same color tile is clicked
+  else if (clicks == 1 && $(this).attr('class') == currentPlayer.color) {
+    var halfThisArmy = divide(currentArmy)
+    console.log(parseInt(this.innerText))
+    this.innerText = parseInt(this.innerText) + halfThisArmy // number() didn't work
+    lastCell.innerText = halfThisArmy
   }
   else {
     console.log("Not a valid move")
   }
-  //clear the clicks
-  //clear currentArmy?
 }
