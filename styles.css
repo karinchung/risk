@@ -1,11 +1,12 @@
-header {
+h1 {
   width: 800px;
   margin: auto;
   margin-bottom: 20px;
 	border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.93);
   padding: 10px;
   text-align: center;
+  float: center;
 }
 
 body {
@@ -21,7 +22,7 @@ body {
 .neutral {
   height: 100px; width: 100px;
   border: 1px solid black;
-  background-color: rgba(243, 236, 180, 0.68);
+  background-color: rgba(249, 249, 246, 0.68);
   background-image: url('neutral.png');
   background-size: cover;
   display: inline-block;
