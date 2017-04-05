@@ -3,20 +3,12 @@ var players = {
   playerTwo: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'red'}
 };
 
-//armySize is really just starting army size unless it's zero in which case you dead
-// count tiles for win condition
-
-
 var gridAmount = 35;
 var board = [];
 var $container = $('.container');
 var $body = $('body');
 var currentPlayer = players.playerOne;
 var otherPlayer = players.playerTwo;
-var $startButton = $('<button>Start Game</button>')
-var clicks = 0
-var currentArmy = 0
-var lastCell = null;
 var $startButton = $('<button>Start Game</button>');
 var clicks = 0;
 var currentArmy = 0;
@@ -54,11 +46,6 @@ function Tile() {
       }
     };
     this.tileDiv.on('click', moveArmy);
-
-};
-
-function divide(armyToDivide) {
-  return Number(armyToDivide / 2)
 };
 
 // Creates all the tiles
@@ -66,22 +53,6 @@ for (var i = 0; i < gridAmount; i++) {
   board[i] = new Tile()
   $container.append(board[i].tileDiv)
 };
-
-// switch turns
-function switchTurns() {
-  if(currentPlayer == players.playerOne) {
-    currentPlayer = players.playerTwo
-    otherPlayer = players.playerOne
-
-  } else {
-    currentPlayer = players.playerOne
-    otherPlayer = players.playerTwo
-  }
-};
-
-var $allTiles = $('.container > div') // if this is put up above the code it doesn't work because tiles haven't been created yet?
-$allTiles.mouseenter(function() {($(this).css('border', '1px solid orange'))});
-$allTiles.mouseleave(function() {($(this).css('border', '1px solid black'))});
 var $allTiles = $('.container > div') // if this is placed above it doesn't work because tiles haven't been created yet
 // $allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
 // $allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
@@ -203,9 +174,6 @@ function moveArmy() {
     else if (battleResult > 0) {
       lastCell.innerText = clickedFirst - clickedSecond
       this.innerText = ""
-      $(this).removeClass(otherPlayer.color)//this.removeClass(OtherPlayer) //make this a thing if current player is x...
-      $(this).addClass('neutral') //remove the other class?
-      clicks = 0
       $(this).removeClass(otherPlayer.color)
       $(this).addClass('neutral')
       clicks = 0
@@ -238,8 +206,6 @@ function moveArmy() {
   }
 };
 
-//highlight cell when clicked on
-// highlight possible cells to go to
 // for win condition scoring
 function addTileScore() {
   var blueScore = 0
