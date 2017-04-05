@@ -19,7 +19,8 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 var totalTurnsAmt = 0;
-var $scoreParagraphs = $('.scoreBox > p')
+var $player1Score = $('.player1Score > p')
+var $player2Score = $('.player2Score > p')
 
 $body.append($container);
 $body.append($startButton);
@@ -70,6 +71,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
+  displayPlayerTurn()
   addTileScore()
 };
 
@@ -83,6 +85,7 @@ function switchTurns() {
     currentPlayer = players.playerOne
     otherPlayer = players.playerTwo
   }
+  displayPlayerTurn()
   addTileScore()
   turnCounter()
 };
@@ -217,12 +220,12 @@ function addTileScore() {
       if ($allTiles.eq(i).attr('class') == 'blue') {
         blueScore += 1
         players.playerOne.tileAmt = blueScore
-        $scoreParagraphs.eq(2).text(':' + blueScore)
+        $player1Score.eq(2).text(':' + blueScore)
       }
       else if ($allTiles.eq(i).attr('class') == 'red') {
         redScore += 1
         players.playerTwo.tileAmt = redScore
-        $scoreParagraphs.eq(5).text(':' + redScore)
+        $player2Score.eq(2).text(':' + redScore)
       }
     }
   }
@@ -243,6 +246,17 @@ function turnCounter() {
   temp += 1
   if (temp % 2 == 0) {
     totalTurnsAmt += (temp/2)
+  }
+};
+
+function displayPlayerTurn() {
+  if (currentPlayer.color  == 'blue') {
+    $player2Score.css('opacity', '0.3')
+    $player1Score.css('opacity', '1')
+  }
+  else if (currentPlayer.color == 'red') {
+    $player1Score.css('opacity', '0.3')
+    $player2Score.css('opacity', 1)
   }
 };
 

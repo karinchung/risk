@@ -29,6 +29,12 @@ body {
   float: left;
 }
 
+.Player1Score {
+}
+
+.Player2Score {
+}
+
 .container {
   width: 820px;
   margin: auto;
