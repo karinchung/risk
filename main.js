@@ -19,6 +19,8 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 var totalTurnsAmt = 0;
+var $player1Score = $('.player1Score > p')
+var $player2Score = $('.player2Score > p')
 
 $body.append($container);
 $body.append($startButton);
@@ -69,6 +71,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
+  displayPlayerTurn()
   addTileScore()
 };
 
@@ -82,6 +85,7 @@ function switchTurns() {
     currentPlayer = players.playerOne
     otherPlayer = players.playerTwo
   }
+  displayPlayerTurn()
   addTileScore()
   turnCounter()
 };
@@ -216,10 +220,12 @@ function addTileScore() {
       if ($allTiles.eq(i).attr('class') == 'blue') {
         blueScore += 1
         players.playerOne.tileAmt = blueScore
+        $player1Score.eq(2).text(':' + blueScore)
       }
       else if ($allTiles.eq(i).attr('class') == 'red') {
         redScore += 1
         players.playerTwo.tileAmt = redScore
+        $player2Score.eq(2).text(':' + redScore)
       }
     }
   }
@@ -228,10 +234,14 @@ function addTileScore() {
 
 function displayWinner() {
   if (players.playerOne.tileAmt == 0) {
-    console.log('Player Two Wins!')
+    $player2Score.css('opacity', '0.3')
+    $player1Score.css('opacity', '1')
+    $player1Score.eq(0).text('Player 1 Wins!')
   }
   if (players.playerTwo.tileAmt == 0) {
-    console.log('Player One Wins!')
+    $player1Score.css('opacity', '0.3')
+    $player2Score.css('opacity', '1')
+    $player2Score.eq(0).text('Player 2 Wins!')
   }
 };
 
@@ -241,10 +251,23 @@ function turnCounter() {
   if (temp % 2 == 0) {
     totalTurnsAmt += (temp/2)
   }
-  console.log(totalTurnsAmt)
+};
+
+function displayPlayerTurn() {
+  if (currentPlayer.color  == 'blue') {
+    $player2Score.css('opacity', '0.3')
+    $player1Score.css('opacity', '1')
+  }
+  else if (currentPlayer.color == 'red') {
+    $player1Score.css('opacity', '0.3')
+    $player2Score.css('opacity', '1')
+  }
 };
 
 //every turn you get +1 to your current army for each tile you occupy
 function reinforcementsToArmy() {
 
 };
+
+
+// breakpoint is about 1110px (fix for tablet & (mobile?))
