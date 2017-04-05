@@ -1,6 +1,6 @@
 var players = {
-  playerOne: {name: null, armySize: 100, tiles: [], color: 'blue'},
-  playerTwo: {name: null, armySize: 100, tiles: [], color: 'red'}
+  playerOne: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'blue'},
+  playerTwo: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'red'}
 };
 
 //armySize is really just starting army size unless it's zero in which case you dead
@@ -8,9 +8,9 @@ var players = {
 
 
 var gridAmount = 35;
+var board = [];
 var $container = $('.container');
 var $body = $('body');
-var board = [];
 var currentPlayer = players.playerOne;
 var otherPlayer = players.playerTwo;
 var $startButton = $('<button>Start Game</button>')
@@ -26,8 +26,9 @@ var option1 = 0;
 var option2 = 0;
 var option3 = 0;
 var option4 = 0;
+var totalTurnsAmt = 0;
 
-
+$body.append($container);
 $body.append($startButton);
 $startButton.on('click', startGame);
 
@@ -82,8 +83,10 @@ var $allTiles = $('.container > div') // if this is put up above the code it doe
 $allTiles.mouseenter(function() {($(this).css('border', '1px solid orange'))});
 $allTiles.mouseleave(function() {($(this).css('border', '1px solid black'))});
 var $allTiles = $('.container > div') // if this is placed above it doesn't work because tiles haven't been created yet
-$allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
-$allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
+// $allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
+// $allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
+$allTiles.mouseenter(function() {($(this).animate({opacity: .7}, 100))});
+$allTiles.mouseleave(function() {($(this).animate({opacity: 1}, 100))});
 
 // start game button and make armies appear
 function startGame() {
@@ -95,6 +98,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
+  addTileScore()
 };
 
 // switch turns
@@ -107,63 +111,56 @@ function switchTurns() {
     currentPlayer = players.playerOne
     otherPlayer = players.playerTwo
   }
+  addTileScore()
+  turnCounter()
 };
 
+//division
 function divide(armyToDivide) {
-  return Number(armyToDivide / 2)
+  return Math.round(Number(armyToDivide / 2))
 };
 
+// displays to the user possible moves allowed
 function checksOptions() {
   if (Number(lastCell.id) - 1 >= 0 && Number(lastCell.id) % 7 != 0) {
     option1 = Number(lastCell.id) - 1
     viableTiles[0] = option1
-    console.log('original cell was ' + lastCell.id)
-    console.log('option1 is ' + option1)
-    $allTiles.eq(option1).css('border', '1.5px solid orange')
+    $allTiles.eq(option1).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) - 7 >= 0) {
     option2 = Number(lastCell.id) - 7
     viableTiles[1] = option2
-    console.log('original cell was ' + lastCell.id)
-    console.log('option2 is ' + option2)
-    $allTiles.eq(option2).css('border', '1.5px solid orange')
+    $allTiles.eq(option2).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) + 1 < gridAmount
   && ((Number(lastCell.id) + 1) % 7 != 0 || Number(lastCell.id) == 0)) { // put an or statement for the 0
     option3 = Number(lastCell.id) + 1
     viableTiles[2] = option3
-    console.log(option3)
-    console.log('original cell was ' + lastCell.id)
-    console.log('option3 is ' + option3)
-    $allTiles.eq(option3).css('border', '1.5px solid orange')
+    $allTiles.eq(option3).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) + 7 < gridAmount) {
     option4 = Number(lastCell.id) + 7
     viableTiles[3] = option4
-    console.log(option4)
-    console.log('original cell was ' + lastCell.id)
-    console.log('option4 is ' + option4)
-    $allTiles.eq(option4).css('border', '1.5px solid orange')
+    $allTiles.eq(option4).css('filter', 'brightness(3)')
   }
 
 };
 
+// gets rid of the displayed options after the player has clicked
 function resetOptionDisplay() {
-  $allTiles.eq(option1).css('border', '1px solid black')
-  $allTiles.eq(option2).css('border', '1px solid black')
-  $allTiles.eq(option3).css('border', '1px solid black')
-  $allTiles.eq(option4).css('border', '1px solid black')
+  $allTiles.eq(option1).css('filter', 'brightness(1)')
+  $allTiles.eq(option2).css('filter', 'brightness(1)')
+  $allTiles.eq(option3).css('filter', 'brightness(1)')
+  $allTiles.eq(option4).css('filter', 'brightness(1)')
 }
 
+// for to move
 function moveArmy() {
-  // first click must be a tile color of the current player
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
-    // make the cell look clicked. Then have it go away
     clicks++
     currentArmy = this.innerText
     lastCell = this
     checksOptions()
-    // add a function here that toggles the viableTiles css to orange
 
   }
   // second click: if a neutral tile is clicked
@@ -193,7 +190,17 @@ function moveArmy() {
     var clickedFirst = parseInt(lastCell.innerText)
     var clickedSecond = parseInt(this.innerText)
     var battleResult = clickedFirst - clickedSecond
-    if (battleResult > 0) {
+    if (divide(clickedFirst) - clickedSecond > 0) {
+      console.log(divide(clickedFirst) - clickedSecond)
+      lastCell.innerText = divide(clickedFirst)
+      this.innerText = divide(clickedFirst) - clickedSecond
+      $(this).removeClass(otherPlayer.color)
+      $(this).addClass(currentPlayer.color)
+      clicks = 0
+      resetOptionDisplay()
+      switchTurns()
+    }
+    else if (battleResult > 0) {
       lastCell.innerText = clickedFirst - clickedSecond
       this.innerText = ""
       $(this).removeClass(otherPlayer.color)//this.removeClass(OtherPlayer) //make this a thing if current player is x...
@@ -233,3 +240,45 @@ function moveArmy() {
 
 //highlight cell when clicked on
 // highlight possible cells to go to
+// for win condition scoring
+function addTileScore() {
+  var blueScore = 0
+  var redScore = 0
+  for (var i = 0; i < $('.container > div').length; i++) {
+    var thisAttr = $allTiles.eq(i).attr('class')
+    if (thisAttr != 'neutral') {
+      if ($allTiles.eq(i).attr('class') == 'blue') {
+        blueScore += 1
+        players.playerOne.tileAmt = blueScore
+      }
+      else if ($allTiles.eq(i).attr('class') == 'red') {
+        redScore += 1
+        players.playerTwo.tileAmt = redScore
+      }
+    }
+  }
+  displayWinner()
+};
+
+function displayWinner() {
+  if (players.playerOne.tileAmt == 0) {
+    console.log('Player Two Wins!')
+  }
+  if (players.playerTwo.tileAmt == 0) {
+    console.log('Player One Wins!')
+  }
+};
+
+function turnCounter() {
+  var temp = totalTurnsAmt
+  temp += 1
+  if (temp % 2 == 0) {
+    totalTurnsAmt += (temp/2)
+  }
+  console.log(totalTurnsAmt)
+};
+
+//every turn you get +1 to your current army for each tile you occupy
+function reinforcementsToArmy() {
+
+};
