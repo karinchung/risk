@@ -96,33 +96,33 @@ function checksOptions() {
   if (Number(lastCell.id) - 1 >= 0 && Number(lastCell.id) % 7 != 0) {
     option1 = Number(lastCell.id) - 1
     viableTiles[0] = option1
-    $allTiles.eq(option1).css('border', '1.9px solid #ff00a5')
+    $allTiles.eq(option1).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) - 7 >= 0) {
     option2 = Number(lastCell.id) - 7
     viableTiles[1] = option2
-    $allTiles.eq(option2).css('border', '1.9px solid #ff00a5')
+    $allTiles.eq(option2).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) + 1 < gridAmount
   && ((Number(lastCell.id) + 1) % 7 != 0 || Number(lastCell.id) == 0)) { // put an or statement for the 0
     option3 = Number(lastCell.id) + 1
     viableTiles[2] = option3
-    $allTiles.eq(option3).css('border', '1.9px solid #ff00a5')
+    $allTiles.eq(option3).css('filter', 'brightness(3)')
   }
   if (Number(lastCell.id) + 7 < gridAmount) {
     option4 = Number(lastCell.id) + 7
     viableTiles[3] = option4
-    $allTiles.eq(option4).css('border', '1.9px solid #ff00a5')
+    $allTiles.eq(option4).css('filter', 'brightness(3)')
   }
 
 };
 
 // gets rid of the displayed options after the player has clicked
 function resetOptionDisplay() {
-  $allTiles.eq(option1).css('border', '1px solid black')
-  $allTiles.eq(option2).css('border', '1px solid black')
-  $allTiles.eq(option3).css('border', '1px solid black')
-  $allTiles.eq(option4).css('border', '1px solid black')
+  $allTiles.eq(option1).css('filter', 'brightness(1)')
+  $allTiles.eq(option2).css('filter', 'brightness(1)')
+  $allTiles.eq(option3).css('filter', 'brightness(1)')
+  $allTiles.eq(option4).css('filter', 'brightness(1)')
 }
 
 // for to move
@@ -236,7 +236,12 @@ function displayWinner() {
 };
 
 function turnCounter() {
-  (totalTurnsAmt += 1) / 2
+  var temp = totalTurnsAmt
+  temp += 1
+  if (temp % 2 == 0) {
+    totalTurnsAmt += (temp/2)
+  }
+  console.log(totalTurnsAmt)
 };
 
 //every turn you get +1 to your current army for each tile you occupy
