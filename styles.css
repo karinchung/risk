@@ -11,12 +11,22 @@ h1 {
 
 p {
   color: white;
-  float: left;
+  display: inline;
 }
 
 body {
   background-color: rgba(0, 0, 0, 1);
   font-family: 'Press Start 2P', cursive;
+}
+
+.playerColor {
+  height: 40px;
+  width: 40px;
+  display: inline;
+}
+
+.scoreBox {
+  float: left;
 }
 
 .container {
@@ -88,4 +98,5 @@ button {
   font-family: 'Press Start 2P', cursive;
   height: 20px;
   border-radius: 5px;
+  background-color: white;
 }

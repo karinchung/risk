@@ -19,6 +19,7 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 var totalTurnsAmt = 0;
+var $scoreParagraphs = $('.scoreBox > p')
 
 $body.append($container);
 $body.append($startButton);
@@ -216,10 +217,12 @@ function addTileScore() {
       if ($allTiles.eq(i).attr('class') == 'blue') {
         blueScore += 1
         players.playerOne.tileAmt = blueScore
+        $scoreParagraphs.eq(2).text(':' + blueScore)
       }
       else if ($allTiles.eq(i).attr('class') == 'red') {
         redScore += 1
         players.playerTwo.tileAmt = redScore
+        $scoreParagraphs.eq(5).text(':' + redScore)
       }
     }
   }
@@ -241,10 +244,12 @@ function turnCounter() {
   if (temp % 2 == 0) {
     totalTurnsAmt += (temp/2)
   }
-  console.log(totalTurnsAmt)
 };
 
 //every turn you get +1 to your current army for each tile you occupy
 function reinforcementsToArmy() {
 
 };
+
+
+// breakpoint is about 1110px (fix for tablet & (mobile?))
