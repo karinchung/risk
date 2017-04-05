@@ -234,10 +234,14 @@ function addTileScore() {
 
 function displayWinner() {
   if (players.playerOne.tileAmt == 0) {
-    console.log('Player Two Wins!')
+    $player2Score.css('opacity', '0.3')
+    $player1Score.css('opacity', '1')
+    $player1Score.eq(0).text('Player 1 Wins!')
   }
   if (players.playerTwo.tileAmt == 0) {
-    console.log('Player One Wins!')
+    $player1Score.css('opacity', '0.3')
+    $player2Score.css('opacity', '1')
+    $player2Score.eq(0).text('Player 2 Wins!')
   }
 };
 
@@ -256,7 +260,7 @@ function displayPlayerTurn() {
   }
   else if (currentPlayer.color == 'red') {
     $player1Score.css('opacity', '0.3')
-    $player2Score.css('opacity', 1)
+    $player2Score.css('opacity', '1')
   }
 };
 
