@@ -1,6 +1,6 @@
 var players = {
-  playerOne: {name: null, armySize: 100, tiles: [], color: 'blue'},
-  playerTwo: {name: null, armySize: 100, tiles: [], color: 'red'}
+  playerOne: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'blue'},
+  playerTwo: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'red'}
 };
 
 var gridAmount = 35;
@@ -68,6 +68,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
+  addTileScore()
 };
 
 // switch turns
@@ -80,33 +81,34 @@ function switchTurns() {
     currentPlayer = players.playerOne
     otherPlayer = players.playerTwo
   }
+  addTileScore()
 };
 
 function divide(armyToDivide) {
-  return Number(armyToDivide / 2)
+  return Math.round(Number(armyToDivide / 2))
 };
 
 function checksOptions() {
   if (Number(lastCell.id) - 1 >= 0 && Number(lastCell.id) % 7 != 0) {
     option1 = Number(lastCell.id) - 1
     viableTiles[0] = option1
-    $allTiles.eq(option1).css('border', '1.5px solid orange')
+    $allTiles.eq(option1).css('border', '1.9px solid #ff00a5')
   }
   if (Number(lastCell.id) - 7 >= 0) {
     option2 = Number(lastCell.id) - 7
     viableTiles[1] = option2
-    $allTiles.eq(option2).css('border', '1.5px solid orange')
+    $allTiles.eq(option2).css('border', '1.9px solid #ff00a5')
   }
   if (Number(lastCell.id) + 1 < gridAmount
   && ((Number(lastCell.id) + 1) % 7 != 0 || Number(lastCell.id) == 0)) { // put an or statement for the 0
     option3 = Number(lastCell.id) + 1
     viableTiles[2] = option3
-    $allTiles.eq(option3).css('border', '1.5px solid orange')
+    $allTiles.eq(option3).css('border', '1.9px solid #ff00a5')
   }
   if (Number(lastCell.id) + 7 < gridAmount) {
     option4 = Number(lastCell.id) + 7
     viableTiles[3] = option4
-    $allTiles.eq(option4).css('border', '1.5px solid orange')
+    $allTiles.eq(option4).css('border', '1.9px solid #ff00a5')
   }
 
 };
@@ -198,5 +200,25 @@ function moveArmy() {
   }
   else {
     console.log("Not a valid move")
+  }
+};
+
+function addTileScore() {
+  var blueScore = 0
+  var redScore = 0
+  for (var i = 0; i < $('.container > div').length; i++) {
+    var thisAttr = $allTiles.eq(i).attr('class')
+    if (thisAttr != 'neutral') {
+      if ($allTiles.eq(i).attr('class') == 'blue') {
+        blueScore += 1
+        players.playerOne.tileAmt = blueScore
+        console.log('blue score is ' + players.playerOne.tileAmt)
+      }
+      else if ($allTiles.eq(i).attr('class') == 'red') {
+        redScore += 1
+        players.playerTwo.tileAmt = redScore
+        console.log('red score is ' + players.playerTwo.tileAmt)
+      }
+    }
   }
 };
