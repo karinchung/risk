@@ -4,9 +4,9 @@ var players = {
 };
 
 var gridAmount = 35;
+var board = [];
 var $container = $('.container');
 var $body = $('body');
-var board = [];
 var currentPlayer = players.playerOne;
 var otherPlayer = players.playerTwo;
 var $startButton = $('<button>Start Game</button>');
@@ -18,8 +18,9 @@ var option1 = 0;
 var option2 = 0;
 var option3 = 0;
 var option4 = 0;
+var totalTurnsAmt = 0;
 
-$body.append($container)
+$body.append($container);
 $body.append($startButton);
 $startButton.on('click', startGame);
 
@@ -82,12 +83,15 @@ function switchTurns() {
     otherPlayer = players.playerTwo
   }
   addTileScore()
+  turnCounter()
 };
 
+//division
 function divide(armyToDivide) {
   return Math.round(Number(armyToDivide / 2))
 };
 
+// displays to the user possible moves allowed
 function checksOptions() {
   if (Number(lastCell.id) - 1 >= 0 && Number(lastCell.id) % 7 != 0) {
     option1 = Number(lastCell.id) - 1
@@ -113,6 +117,7 @@ function checksOptions() {
 
 };
 
+// gets rid of the displayed options after the player has clicked
 function resetOptionDisplay() {
   $allTiles.eq(option1).css('border', '1px solid black')
   $allTiles.eq(option2).css('border', '1px solid black')
@@ -120,15 +125,13 @@ function resetOptionDisplay() {
   $allTiles.eq(option4).css('border', '1px solid black')
 }
 
+// for to move
 function moveArmy() {
-  // first click must be a tile color of the current player
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
-    // make the cell look clicked. Then have it go away
     clicks++
     currentArmy = this.innerText
     lastCell = this
     checksOptions()
-    // add a function here that toggles the viableTiles css to orange
 
   }
   // second click: if a neutral tile is clicked
@@ -203,6 +206,7 @@ function moveArmy() {
   }
 };
 
+// for win condition scoring
 function addTileScore() {
   var blueScore = 0
   var redScore = 0
@@ -212,13 +216,30 @@ function addTileScore() {
       if ($allTiles.eq(i).attr('class') == 'blue') {
         blueScore += 1
         players.playerOne.tileAmt = blueScore
-        console.log('blue score is ' + players.playerOne.tileAmt)
       }
       else if ($allTiles.eq(i).attr('class') == 'red') {
         redScore += 1
         players.playerTwo.tileAmt = redScore
-        console.log('red score is ' + players.playerTwo.tileAmt)
       }
     }
   }
+  displayWinner()
+};
+
+function displayWinner() {
+  if (players.playerOne.tileAmt == 0) {
+    console.log('Player Two Wins!')
+  }
+  if (players.playerTwo.tileAmt == 0) {
+    console.log('Player One Wins!')
+  }
+};
+
+function turnCounter() {
+  (totalTurnsAmt += 1) / 2
+};
+
+//every turn you get +1 to your current army for each tile you occupy
+function reinforcementsToArmy() {
+
 };
