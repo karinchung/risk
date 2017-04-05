@@ -19,7 +19,7 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 
-
+$body.append($container)
 $body.append($startButton);
 $startButton.on('click', startGame);
 
@@ -53,8 +53,10 @@ for (var i = 0; i < gridAmount; i++) {
   $container.append(board[i].tileDiv)
 };
 var $allTiles = $('.container > div') // if this is placed above it doesn't work because tiles haven't been created yet
-$allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
-$allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
+// $allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
+// $allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
+$allTiles.mouseenter(function() {($(this).animate({opacity: .7}, 100))});
+$allTiles.mouseleave(function() {($(this).animate({opacity: 1}, 100))});
 
 // start game button and make armies appear
 function startGame() {
@@ -88,32 +90,22 @@ function checksOptions() {
   if (Number(lastCell.id) - 1 >= 0 && Number(lastCell.id) % 7 != 0) {
     option1 = Number(lastCell.id) - 1
     viableTiles[0] = option1
-    console.log('original cell was ' + lastCell.id)
-    console.log('option1 is ' + option1)
     $allTiles.eq(option1).css('border', '1.5px solid orange')
   }
   if (Number(lastCell.id) - 7 >= 0) {
     option2 = Number(lastCell.id) - 7
     viableTiles[1] = option2
-    console.log('original cell was ' + lastCell.id)
-    console.log('option2 is ' + option2)
     $allTiles.eq(option2).css('border', '1.5px solid orange')
   }
   if (Number(lastCell.id) + 1 < gridAmount
   && ((Number(lastCell.id) + 1) % 7 != 0 || Number(lastCell.id) == 0)) { // put an or statement for the 0
     option3 = Number(lastCell.id) + 1
     viableTiles[2] = option3
-    console.log(option3)
-    console.log('original cell was ' + lastCell.id)
-    console.log('option3 is ' + option3)
     $allTiles.eq(option3).css('border', '1.5px solid orange')
   }
   if (Number(lastCell.id) + 7 < gridAmount) {
     option4 = Number(lastCell.id) + 7
     viableTiles[3] = option4
-    console.log(option4)
-    console.log('original cell was ' + lastCell.id)
-    console.log('option4 is ' + option4)
     $allTiles.eq(option4).css('border', '1.5px solid orange')
   }
 
@@ -164,7 +156,17 @@ function moveArmy() {
     var clickedFirst = parseInt(lastCell.innerText)
     var clickedSecond = parseInt(this.innerText)
     var battleResult = clickedFirst - clickedSecond
-    if (battleResult > 0) {
+    if (divide(clickedFirst) - clickedSecond > 0) {
+      console.log(divide(clickedFirst) - clickedSecond)
+      lastCell.innerText = divide(clickedFirst)
+      this.innerText = divide(clickedFirst) - clickedSecond
+      $(this).removeClass(otherPlayer.color)
+      $(this).addClass(currentPlayer.color)
+      clicks = 0
+      resetOptionDisplay()
+      switchTurns()
+    }
+    else if (battleResult > 0) {
       lastCell.innerText = clickedFirst - clickedSecond
       this.innerText = ""
       $(this).removeClass(otherPlayer.color)
