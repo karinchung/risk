@@ -1,9 +1,9 @@
 var players = {
-  playerOne: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'blue'},
-  playerTwo: {name: null, armySize: 100, tileAmt: 0, tiles: [], color: 'red'}
+  playerOne: {name: null, armySize: 50, tileAmt: 0, tiles: [], color: 'blue'},
+  playerTwo: {name: null, armySize: 50, tileAmt: 0, tiles: [], color: 'red'}
 };
 
-var gridAmount = 35;
+var gridAmount = 28;
 var board = [];
 var $container = $('.container');
 var $body = $('body');
@@ -74,16 +74,10 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
-  toggleFortification()
-  toggleFortification()
-  toggleFortification()
-  toggleFortification()
-  toggleFortification()
-  toggleDefectors()
-  toggleDefectors()
-  toggleDefectors()
-  toggleDefectors()
-  toggleDefectors()
+  for (var i = 0; i < 6; i++) {
+    toggleFortification()
+    toggleDefectors()
+  }
   displayPlayerTurn()
   addTileScore()
 };
@@ -96,16 +90,17 @@ function startGame() {
 // }
 
 function toggleFortification() {
-  var randoNumbo = Math.floor((Math.random() * 33) + 1)
+  var randoNumbo = Math.floor((Math.random() * (gridAmount - 2)) + 1)
   if ($allTiles.eq(randoNumbo).attr('class') != 'fortification') {
   $allTiles.eq(randoNumbo).removeClass('neutral')
   $allTiles.eq(randoNumbo).toggleClass('fortification')
   $allTiles.eq(randoNumbo).text('10')
+  console.log()
   }
 };
 
 function toggleDefectors() {
-  var randoNumbo = Math.floor((Math.random() * 33) + 1)
+  var randoNumbo = Math.floor((Math.random() * (gridAmount - 2)) + 1)
   if ($allTiles.eq(randoNumbo).attr('class') != 'fortification' &&
   $allTiles.eq(randoNumbo).attr('class') != 'defector') {
   $allTiles.eq(randoNumbo).removeClass('neutral')
@@ -168,7 +163,7 @@ function resetOptionDisplay() {
   $allTiles.eq(option4).css('filter', 'brightness(1)')
 }
 
-// for to move
+// for to move, these can probably have individual functions instead of giant condition statements
 function moveArmy() {
   if(clicks == 0 && $(this).attr('class') == currentPlayer.color) {
     clicks++

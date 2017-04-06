@@ -1,72 +1,39 @@
-### Risk
+# ![](title.png)
 
+## A game about splitting in half to take control of other cells
 
+![](game.png)
+![](overlay.png)
 
-**Risk**
-	* You click on tiles to move army men to them from a starting pool. Start with 100 when you click on the starting pool and then somewhere else it takes half away from your army and places them there. If there is already something there it adds them. If they're from an enemy team, it subtracts. Tiles change color based on who has an army there.
+Take control of all the cells on the board by clicking an adjacesnt cell to send half of your army there. Some of the cells you'll encounter will help and add to your total body count and other will hurt and subtract.
 
-Grid/Map of tiles that start out as neutral.
+When you encounter an enemy you two will battle it by subtracting the amount of cells sent over!
 
-Player 1 and player 2 start on opposite ends of the map with their tiles toggled to their player color.
+The game can be played [here](https://karinchung.github.io/risk/)
 
-Player 1 clicks on their starting tile which has an army size of 100.
+## Technologies
+Divide and Conquer uses HTML, CSS, Javascript, and jQuery.
 
-They then click on an adjascent tile. They can't click on the same tile.
+## User Stories
+* I'd like to see who's turn it is so I don't have to remember
+* Cool graphics so I'm not bored
+* A legend so I know what I'm doing and why
+* States for when I'm clicking or hovering so I can see what I'm doing
 
-Half of their army (rounded down) is sent to that tile.
+## MVP
+* Clicking on a cell to move half it's value to another cell
+* Battle function to win over other cells
+* Win display
 
-If they have an in that tile, it adds them.
+## Nice to Haves
+* Reset button
+* Beta version that's about point collection instead of cell division
+* Fix breakpoints for tablet and mobile
 
-If there is an enemy in that tile, it subtracts them and displays the one with more. (case where two players are on the same tile, you add more to your army. It had to add your army first, then execute the battle function.
+## Bugs being worked on
+* If you have a cell with 1 in it, instead of going away, it divides into two cells with 1 body
 
-Game ends when a player has defeated the other player's army. If player 2 has 0 army, they lose.
+## Credit
+Images from Jason Moran, 3D artist. His website can be found [here](http://jasonmoran3d.com/)
 
-//sudocode
-
-1. create divs for each tile on the map
-	* each div has a height and width.
-	* class neutral, blue, red each with their own image
-	* all classes have an army size, 0 for neutral, 100, 100
-	* all divs have a click event
-		* First click (if class != neutral) then listen for another click (if div != same div) (if neutral) grab half of the first div's army and add them to the second div. (if same class) add armies together then (if enemy is there too ) battle (if different class) then battle.
-
-		battle checks
-
-		1. if 1-2 <= 0 or 2-1 < 0 then
-		2.  if army 1 > army 2, army 2 - 1. remve class 2 and add class 1. if army
-		3. There shouldn't be a case where both are on the board
-
-		Must switch turns too
-
-				Game starts with everyone as neutral. Start game toggles the first and last tile to red and then blue
-				
-This is just a subtraction game. must add points on the map where I can add 2 to my army. (mercernary spots)
-Or if I don't want to attack I can fotify
-
-Extra:
-
-1. tile count for each player (score)
-2. sound/animation of armies
-
-
-Grid 
-
-randomly pick ocean squares (obstacles)
-
-player 1 is positive
-player two is negative
-
-0 is neutral.
-if positive then player 1
-if negative then player 2
-
-fortification: null
-
-if the div has a fortification then it's true
-if true then army *1.1
-
-randomly generate where the fortifications are and where the blockades are
-
-
-Roadblocks:
-1. 
+Popup modal from an MIT opensource plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
