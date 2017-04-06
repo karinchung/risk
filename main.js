@@ -66,14 +66,31 @@ function startGame() {
   board[0].owner = players.playerOne
   board[0].showNewClass()
   board[0].tileDiv.text(players.playerOne.armySize)
-
   board[gridAmount - 1].owner = players.playerTwo
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
+  toggleFortification()
+  toggleFortification()
+  toggleFortification()
+  toggleFortification()
+  toggleFortification()
   displayPlayerTurn()
   addTileScore()
 };
+
+function toggleFortification() {
+  var randoNumbo = Math.floor((Math.random() * 33) + 1)
+  if ($allTiles.eq(randoNumbo).attr('class') != 'fortification') {
+  $allTiles.eq(randoNumbo).removeClass('neutral')
+  $allTiles.eq(randoNumbo).toggleClass('fortification')
+  $allTiles.eq(randoNumbo).text('10')
+  }
+}
+
+function toggleDefectors() {
+  //for the -10 tiles
+}
 
 // switch turns
 function switchTurns() {
@@ -136,7 +153,21 @@ function moveArmy() {
     currentArmy = this.innerText
     lastCell = this
     checksOptions()
-
+  }
+  // second click: if it's a fortification tile
+  else if (clicks == 1 && $(this).attr('class') == 'fortification' &&
+  (this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) ) {
+    var halfThisArmy = divide(currentArmy)
+    $(this).removeClass('fortification')
+    $(this).toggleClass(currentPlayer.color)
+    // var newTile = this.innerText
+    // console.log(newTile)
+    console.log(Number(halfThisArmy))
+    this.innerText = Number(halfThisArmy) + 10
+    lastCell.innerText = halfThisArmy
+    clicks = 0
+    resetOptionDisplay()
+    switchTurns()
   }
   // second click: if a neutral tile is clicked
   else if ((clicks == 1 && $(this).attr('class') == 'neutral') &&
@@ -152,7 +183,8 @@ function moveArmy() {
     switchTurns()
   }
   // second click: if the same color tile is clicked
-  else if (clicks == 1 && $(this).attr('class') == currentPlayer.color) {
+  else if (clicks == 1 && $(this).attr('class') == currentPlayer.color
+  && ((this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) )) {
     var halfThisArmy = divide(currentArmy)
     this.innerText = parseInt(this.innerText) + halfThisArmy // number() didn't work
     lastCell.innerText = halfThisArmy
@@ -161,7 +193,8 @@ function moveArmy() {
     switchTurns()
   }
   // second click: if an enemy tile is clicked
-  else if (clicks == 1 && $(this).attr('class') != 'neutral' && ($(this).attr('class') != currentPlayer.color)) {
+  else if (clicks == 1 && $(this).attr('class') != 'neutral' && ($(this).attr('class') != currentPlayer.color &&
+    (this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) )) {
     var clickedFirst = parseInt(lastCell.innerText)
     var clickedSecond = parseInt(this.innerText)
     var battleResult = clickedFirst - clickedSecond
