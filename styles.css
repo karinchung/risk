@@ -29,12 +29,6 @@ body {
   float: left;
 }
 
-.Player1Score {
-}
-
-.Player2Score {
-}
-
 .container {
   width: 820px;
   margin: auto;
@@ -58,7 +52,6 @@ body {
   float: left;
   color: white;
   margin: 2px;
-
 }
 
 .red {
@@ -69,7 +62,6 @@ body {
   float: left;
   color: white;
   margin: 2px;
-
 }
 
 .fortification {
@@ -77,20 +69,19 @@ body {
   background-image: url('VirusCells_neutralCell2.png');
   display: inline-block;
   background-size: cover;
-  background-color: rgba(255, 153, 0, 0.2);
   float: left;
   color: orange;
   margin: 2px;
-
 }
 
-.obstacle {
+.defector {
   height: 100px; width: 100px;
+  background-image: url('VirusCells_neutralCell2.png');
   display: inline-block;
+  background-size: cover;
   float: left;
-  color: white;
+  color: orange;
   margin: 2px;
-
 }
 
 button {

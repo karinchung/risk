@@ -55,9 +55,8 @@ for (var i = 0; i < gridAmount; i++) {
   board[i] = new Tile()
   $container.append(board[i].tileDiv)
 };
-var $allTiles = $('.container > div') // if this is placed above it doesn't work because tiles haven't been created yet
-// $allTiles.mouseenter(function() {($(this).css('border', '1.5px solid orange'))});
-// $allTiles.mouseleave(function() {($(this).css('border', '1.5px solid black'))});
+
+var $allTiles = $('.container > div')
 $allTiles.mouseenter(function() {($(this).animate({opacity: .7}, 100))});
 $allTiles.mouseleave(function() {($(this).animate({opacity: 1}, 100))});
 
@@ -75,6 +74,11 @@ function startGame() {
   toggleFortification()
   toggleFortification()
   toggleFortification()
+  toggleDefectors()
+  toggleDefectors()
+  toggleDefectors()
+  toggleDefectors()
+  toggleDefectors()
   displayPlayerTurn()
   addTileScore()
 };
@@ -86,11 +90,17 @@ function toggleFortification() {
   $allTiles.eq(randoNumbo).toggleClass('fortification')
   $allTiles.eq(randoNumbo).text('10')
   }
-}
+};
 
 function toggleDefectors() {
-  //for the -10 tiles
-}
+  var randoNumbo = Math.floor((Math.random() * 33) + 1)
+  if ($allTiles.eq(randoNumbo).attr('class') != 'fortification' &&
+  $allTiles.eq(randoNumbo).attr('class') != 'defector') {
+  $allTiles.eq(randoNumbo).removeClass('neutral')
+  $allTiles.eq(randoNumbo).toggleClass('defector')
+  $allTiles.eq(randoNumbo).text('-10')
+  }
+};
 
 // switch turns
 function switchTurns() {
@@ -160,10 +170,18 @@ function moveArmy() {
     var halfThisArmy = divide(currentArmy)
     $(this).removeClass('fortification')
     $(this).toggleClass(currentPlayer.color)
-    // var newTile = this.innerText
-    // console.log(newTile)
-    console.log(Number(halfThisArmy))
     this.innerText = Number(halfThisArmy) + 10
+    lastCell.innerText = halfThisArmy
+    clicks = 0
+    resetOptionDisplay()
+    switchTurns()
+  }
+  else if (clicks == 1 && $(this).attr('class') == 'defector' &&
+  (this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) ) {
+    var halfThisArmy = divide(currentArmy)
+    $(this).removeClass('defector')
+    $(this).toggleClass(currentPlayer.color)
+    this.innerText = Number(halfThisArmy) - 10
     lastCell.innerText = halfThisArmy
     clicks = 0
     resetOptionDisplay()
