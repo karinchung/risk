@@ -10,6 +10,7 @@ var $body = $('body');
 var currentPlayer = players.playerOne;
 var otherPlayer = players.playerTwo;
 var $startButton = $('<button>Start Game</button>');
+var $resetButton = $('<button>Reset Game</button>');
 var clicks = 0;
 var currentArmy = 0;
 var lastCell = null;
@@ -19,13 +20,24 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 var totalTurnsAmt = 0;
-var $scoreDisplay = $('.scoreBox')
-var $player1Score = $('.player1Score > p')
-var $player2Score = $('.player2Score > p')
-var $header = $('header')
-$body.append($container);
+var $scoreDisplay = $('.scoreBox');
+var $player1Score = $('.player1Score > p');
+var $player2Score = $('.player2Score > p');
+var $header = $('header');
+// $scoreDisplay.prepend($resetButton);
 $scoreDisplay.prepend($startButton);
 $startButton.on('click', startGame);
+// $resetButton.on('click', resetGame);
+
+// Creates all the tiles
+for (var i = 0; i < gridAmount; i++) {
+  board[i] = new Tile()
+  $container.append(board[i].tileDiv)
+};
+
+var $allTiles = $('.container > div')
+$allTiles.mouseenter(function() {($(this).animate({opacity: .7}, 100))});
+$allTiles.mouseleave(function() {($(this).animate({opacity: 1}, 100))});
 
 // tile creation constructor
 function Tile() {
@@ -51,16 +63,6 @@ function Tile() {
     this.tileDiv.on('click', moveArmy);
 };
 
-// Creates all the tiles
-for (var i = 0; i < gridAmount; i++) {
-  board[i] = new Tile()
-  $container.append(board[i].tileDiv)
-};
-
-var $allTiles = $('.container > div')
-$allTiles.mouseenter(function() {($(this).animate({opacity: .7}, 100))});
-$allTiles.mouseleave(function() {($(this).animate({opacity: 1}, 100))});
-
 // start game button and make armies appear
 function startGame() {
   board[0].owner = players.playerOne
@@ -83,6 +85,13 @@ function startGame() {
   displayPlayerTurn()
   addTileScore()
 };
+
+// function resetGame() {
+//   for (var i = 0; i < gridAmount; i++) {
+//     $allTiles.eq(i).attr('class') = 'neutral'
+//   }
+//   startGame()
+// }
 
 function toggleFortification() {
   var randoNumbo = Math.floor((Math.random() * 33) + 1)
