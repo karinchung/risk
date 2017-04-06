@@ -19,11 +19,12 @@ var option2 = 0;
 var option3 = 0;
 var option4 = 0;
 var totalTurnsAmt = 0;
+var $scoreDisplay = $('.scoreBox')
 var $player1Score = $('.player1Score > p')
 var $player2Score = $('.player2Score > p')
-
+var $header = $('header')
 $body.append($container);
-$body.append($startButton);
+$scoreDisplay.prepend($startButton);
 $startButton.on('click', startGame);
 
 // tile creation constructor
