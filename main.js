@@ -179,9 +179,16 @@ function moveArmy() {
   else if (clicks == 1 && $(this).attr('class') == 'defector' &&
   (this.id == viableTiles[0] || this.id == viableTiles[1] || this.id == viableTiles[2] || this.id == viableTiles[3]) ) {
     var halfThisArmy = divide(currentArmy)
-    $(this).removeClass('defector')
-    $(this).toggleClass(currentPlayer.color)
-    this.innerText = Number(halfThisArmy) - 10
+    if ((Number(halfThisArmy) - 10) > 0) {
+      this.innerText = Number(halfThisArmy) - 10
+      $(this).removeClass('defector')
+      $(this).toggleClass(currentPlayer.color)
+      }
+    else if ((Number(halfThisArmy) - 10) < 0) {
+      this.innerText = ""
+      $(this).removeClass('defector')
+      $(this).toggleClass('neutral')
+    }
     lastCell.innerText = halfThisArmy
     clicks = 0
     resetOptionDisplay()
