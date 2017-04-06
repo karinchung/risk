@@ -24,10 +24,12 @@ var $scoreDisplay = $('.scoreBox');
 var $player1Score = $('.player1Score > p');
 var $player2Score = $('.player2Score > p');
 var $header = $('header');
-// $scoreDisplay.prepend($resetButton);
+var $openPopup = $('.my_popup_open')
+$scoreDisplay.prepend($openPopup)
 $scoreDisplay.prepend($startButton);
-$startButton.on('click', startGame);
+// $scoreDisplay.prepend($resetButton);
 // $resetButton.on('click', resetGame);
+$startButton.on('click', startGame);
 
 // Creates all the tiles
 for (var i = 0; i < gridAmount; i++) {
