@@ -38,5 +38,3 @@ Divide and Conquer uses HTML, CSS, Javascript, and jQuery.
 Images from Jason Moran, 3D artist. His website can be found [here](http://jasonmoran3d.com/)
 
 Popup modal from an MIT open source plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
-
-Background image found on [pintrest](https://www.pinterest.com/pin/492018328012414496/) 
