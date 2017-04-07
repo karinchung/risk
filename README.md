@@ -5,7 +5,7 @@
 ![](game.png)
 ![](overlay.png)
 
-Take control of all the cells on the board by clicking an adjacesnt cell to send half of your army there. Some of the cells you'll encounter will help and add to your total body count and other will hurt and subtract.
+Take control of all the cells on the board by clicking an adjacent cell to send half of your army there. Some of the cells you'll encounter will help and add to your total body count and other will hurt and subtract.
 
 When you encounter an enemy you two will battle it by subtracting the amount of cells sent over!
 
@@ -27,13 +27,14 @@ Divide and Conquer uses HTML, CSS, Javascript, and jQuery.
 
 ## Nice to Haves
 * Reset button
-* Beta version that's about point collection instead of cell division
+* Splash page to host this game and another game that's points based
 * Fix breakpoints for tablet and mobile
+* Tie movement to keys
 
 ## Bugs being worked on
-* If you have a cell with 1 in it, instead of going away, it divides into two cells with 1 body
+* If you have a cell with 1 in it, instead of going away, it divides into two cells with 1 in both of them
 
 ## Credit
 Images from Jason Moran, 3D artist. His website can be found [here](http://jasonmoran3d.com/)
 
-Popup modal from an MIT opensource plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
+Popup modal from an MIT open source plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
