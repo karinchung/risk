@@ -19,6 +19,7 @@ Divide and Conquer uses HTML, CSS, Javascript, and jQuery.
 * Cool graphics so I'm not bored
 * A legend so I know what I'm doing and why
 * States for when I'm clicking or hovering so I can see what I'm doing
+* Show me where I'm allowed to move to so I don't just click around lost
 
 ## MVP
 * Clicking on a cell to move half it's value to another cell
