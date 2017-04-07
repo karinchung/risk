@@ -26,9 +26,9 @@ var $player2Score = $('.player2Score > p');
 var $header = $('header');
 var $openPopup = $('.my_popup_open')
 $scoreDisplay.prepend($openPopup)
-$scoreDisplay.prepend($resetButton);
+// $scoreDisplay.prepend($resetButton);
 $scoreDisplay.prepend($startButton);
-$resetButton.on('click', resetGame);
+// $resetButton.on('click', resetGame);
 $startButton.on('click', startGame);
 
 // Creates all the tiles
@@ -82,37 +82,37 @@ function startGame() {
   addTileScore()
 };
 
-function resetGame() {
-  for (var i = 0; i < gridAmount; i++) { //loop through an array of these for DRY
-    if ($allTiles.eq(i).attr('class') == 'red') {
-      $allTiles.eq(i).text("")
-      console.log($allTiles.eq(i).text())
-    }
-    if ($allTiles.eq(i).attr('class') == 'blue') {
-      $allTiles.eq(i).text("")
-    }
-    if ($allTiles.eq(i).attr('class') == 'fortification') {
-      $allTiles.eq(i).text("")
-    }
-    if ($allTiles.eq(i).attr('class') == 'defector') {
-      $allTiles.eq(i).text("")
-    }
-    if ($allTiles.eq(i).attr('class') == 'superFort') {
-      $allTiles.eq(i).text("")
-    }
-    if ($allTiles.eq(i).attr('class') == 'superDef') {
-      $allTiles.eq(i).text("")
-    }
-    $allTiles.eq(i).removeClass('red')
-    $allTiles.eq(i).removeClass('blue')
-    $allTiles.eq(i).removeClass('fortification')
-    $allTiles.eq(i).removeClass('defector')
-    $allTiles.eq(i).removeClass('superFort')
-    $allTiles.eq(i).removeClass('superDef')
-    $allTiles.eq(i).addClass('neutral')
-  };
-  startGame()
-};
+// function resetGame() {
+//   for (var i = 0; i < gridAmount; i++) { //loop through an array of these for DRY
+//     if ($allTiles.eq(i).attr('class') == 'red') {
+//       $allTiles.eq(i).text("")
+//       console.log($allTiles.eq(i).text())
+//     }
+//     if ($allTiles.eq(i).attr('class') == 'blue') {
+//       $allTiles.eq(i).text("")
+//     }
+//     if ($allTiles.eq(i).attr('class') == 'fortification') {
+//       $allTiles.eq(i).text("")
+//     }
+//     if ($allTiles.eq(i).attr('class') == 'defector') {
+//       $allTiles.eq(i).text("")
+//     }
+//     if ($allTiles.eq(i).attr('class') == 'superFort') {
+//       $allTiles.eq(i).text("")
+//     }
+//     if ($allTiles.eq(i).attr('class') == 'superDef') {
+//       $allTiles.eq(i).text("")
+//     }
+//     $allTiles.eq(i).removeClass('red')
+//     $allTiles.eq(i).removeClass('blue')
+//     $allTiles.eq(i).removeClass('fortification')
+//     $allTiles.eq(i).removeClass('defector')
+//     $allTiles.eq(i).removeClass('superFort')
+//     $allTiles.eq(i).removeClass('superDef')
+//     $allTiles.eq(i).addClass('neutral')
+//   };
+//   startGame()
+// };
 
 function toggleFortification() {
   var randoNumbo = Math.floor((Math.random() * (gridAmount - 2)) + 1)
@@ -351,11 +351,6 @@ function displayPlayerTurn() {
     $player1Score.css('opacity', '0.3')
     $player2Score.css('opacity', '1')
   }
-};
-
-//every turn you get +1 to your current army for each tile you occupy
-function reinforcementsToArmy() {
-
 };
 
 
