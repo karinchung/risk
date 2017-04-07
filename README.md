@@ -1,27 +1,46 @@
-### Risk
+# ![](title.png)
 
 // notes: math.abs for winner
 
 
+## A game about splitting in half to take control of other cells
 
-**Risk**
-	* You click on tiles to move army men to them from a starting pool. Start with 100 when you click on the starting pool and then somewhere else it takes half away from your army and places them there. If there is already something there it adds them. If they're from an enemy team, it subtracts. Tiles change color based on who has an army there.
 
-Grid/Map of tiles that start out as neutral.
+![](game.png)
+![](overlay.png)
 
-Player 1 and player 2 start on opposite ends of the map with their tiles toggled to their player color.
+Take control of all the cells on the board by clicking an adjacent cell to send half of your army there. Some of the cells you'll encounter will help and add to your total body count and other will hurt and subtract.
 
-Player 1 clicks on their starting tile which has an army size of 100.
+When you encounter an enemy you two will battle it by subtracting the amount of cells sent over!
 
-They then click on an adjascent tile. They can't click on the same tile.
+The game can be played [here](https://karinchung.github.io/risk/)
 
-Half of their army (rounded down) is sent to that tile.
+## Technologies
+Divide and Conquer uses HTML, CSS, Javascript, and jQuery.
 
-If they have an in that tile, it adds them.
+## User Stories
+* I'd like to see who's turn it is so I don't have to remember
+* Cool graphics so I'm not bored
+* A legend so I know what I'm doing and why
+* States for when I'm clicking or hovering so I can see what I'm doing
 
-If there is an enemy in that tile, it subtracts them and displays the one with more. (case where two players are on the same tile, you add more to your army. It had to add your army first, then execute the battle function.
+## MVP
+* Clicking on a cell to move half it's value to another cell
+* Battle function to win over other cells
+* Win display
 
-Game ends when a player has defeated the other player's army. If player 2 has 0 army, they lose.
+## Nice to Haves
+* Reset button
+* Splash page to host this game and another game that's points based
+* Fix breakpoints for tablet and mobile
+* Tie movement to keys
+
+## Bugs being worked on
+* If you have a cell with 1 in it, instead of going away, it divides into two cells with 1 in both of them
+
+## Credit
+Images from Jason Moran, 3D artist. His website can be found [here](http://jasonmoran3d.com/)
+
 
 //sudocode
 
@@ -95,3 +114,6 @@ Roadblocks:
    }
 
  });
+
+Popup modal from an MIT open source plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
+>>>>>>> master
