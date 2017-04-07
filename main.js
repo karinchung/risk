@@ -26,9 +26,9 @@ var $player2Score = $('.player2Score > p');
 var $header = $('header');
 var $openPopup = $('.my_popup_open')
 $scoreDisplay.prepend($openPopup)
-$scoreDisplay.prepend($startButton);
 // $scoreDisplay.prepend($resetButton);
-// $resetButton.on('click', resetGame);
+$scoreDisplay.prepend($startButton);
+$resetButton.on('click', resetGame);
 $startButton.on('click', startGame);
 
 // Creates all the tiles
@@ -82,12 +82,18 @@ function startGame() {
   addTileScore()
 };
 
-// function resetGame() {
-//   for (var i = 0; i < gridAmount; i++) {
-//     $allTiles.eq(i).attr('class') = 'neutral'
-//   }
-//   startGame()
-// }
+function resetGame() {
+  for (var i = 0; i < gridAmount; i++) {
+    $allTiles.eq(i).removeClass = 'red'
+    $allTiles.eq(i).removeClass = 'blue'
+    $allTiles.eq(i).removeClass = 'fortification'
+    $allTiles.eq(i).removeClass = 'defector'
+    $allTiles.eq(i).removeClass = 'superFort'
+    $allTiles.eq(i).removeClass = 'superDef'
+    $allTiles.eq(i).toggleClass = 'neutral'
+  }
+  startGame()
+}
 
 function toggleFortification() {
   var randoNumbo = Math.floor((Math.random() * (gridAmount - 2)) + 1)
