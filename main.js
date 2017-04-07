@@ -74,7 +74,7 @@ function startGame() {
   board[gridAmount - 1].showNewClass()
   board[gridAmount - 1].tileDiv.text(players.playerTwo.armySize)
   $startButton.off('click', startGame)
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 8; i++) {
     toggleFortification()
     toggleDefectors()
   }

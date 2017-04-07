@@ -116,4 +116,9 @@ Roadblocks:
  });
 
 Popup modal from an MIT open source plugin found [here](http://dev.vast.com/jquery-popup-overlay/)
+<<<<<<< HEAD
+>>>>>>> master
+=======
+
+Background image found on [pintrest](https://www.pinterest.com/pin/492018328012414496/) 
 >>>>>>> master
